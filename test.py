@@ -1,3 +1,6 @@
+import os, time
+client = None
+
 async def massspam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I HAD A FUCKING BONER"):
     if int(numberofmsges) <= 650:
         yes_wl = ("yes", "y", "everyone", "true")

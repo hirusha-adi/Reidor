@@ -299,6 +299,7 @@ async def on_message(message):
             if subcmnd in spam_unsafe_wl:
                 
 
+                
         await client.process_commands(message)
     
 
