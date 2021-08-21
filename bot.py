@@ -8,7 +8,7 @@ from keep_alive import keep_alive
 
 # MAIN VERIABLES
 # --------------------------
-token = x
+token = os.environ['TOKEN']
 botconfigdata = json.load(open("config.json", "r"))
 bot_prefix = botconfigdata["bot-prefix"]
 bot_creator_name = botconfigdata["bot-creator-name"]
@@ -32,6 +32,19 @@ able_users = (
     709299771415986227 # Mikey
 ) 
 
+# ALL COMMAND NAME LIST WITH ALIASES
+# --------------------------
+spam_unsafe_wl = ("spam", "s", "spamunsafe", "spamnotsafe", "unsafespam", "notsafespam", "sunsafe")
+mass_spam_wl = ("massspam", "ms", "masspam", "maspam", "mspam", "masss")
+
+masschannel_unsafe_wl = ("masschannel", "mc", "masschanel", "masschanal", "masschanel", "masschanelunsafe")
+masschannel_safe_wl = ("masschannelsafe", "mcs", "mc-s", "mc_s", "safemasschannel")
+
+massrole_unsafe_wl = ("massrole", "mr", "mrunsfae", "massroleunsafe")
+massrole_safe_wl = ("massrolesafe", "mrs", "mrsafe", "safemassrole")
+# --------------------------
+
+
 # NOW THE BOT IS READY
 # --------------------------
 @client.event
@@ -44,6 +57,7 @@ async def on_ready():
 
 
 
+
 # SPAM COMMANDS
 # -----------------------------------------------------------------------------------------
 # -----------------------------------------------------------------------------------------
@@ -52,7 +66,7 @@ async def on_ready():
 # THE SPAM COMMAND
 # Spam only into one channel ( the channel you type the command )
 # --------------------------
-@client.command(aliases=["s"])
+@client.command(aliases=["s", "spamunsafe", "spamnotsafe", "unsafespam", "notsafespam", "sunsafe"])
 async def spam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I HAD A FUCKING BONER"):
     if int(numberofmsges) <= 650:
         yes_wl = ("yes", "y", "everyone", "true")
@@ -63,7 +77,7 @@ async def spam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I HAD A
         else:
             for iteration, x in enumerate(range(int(numberofmsges))):
                 await ctx.send(f"{messagehere}")
-                await asyncio.sleep(0.3)
+                await asyncio.sleep(0.4)
     else:
         embed=discord.Embed(title="AN ERROR HAS OCCURED!!", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
@@ -98,7 +112,7 @@ async def massspam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I H
                     # The normal spam command
                     for iteration, y in enumerate(range(int(numberofmsges))):
                         await x.send(f"@everyone @here - {messagehere}")
-                        await asyncio.sleep(0.7)
+                        await asyncio.sleep(0.4)
                     
                 except AttributeError:
                     print("Its a Category or a Voice Channel, not a text channel")
@@ -143,7 +157,7 @@ async def massspam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I H
 
 # THE MASS CHANNEL COMMAND - UNSAFE
 # --------------------------
-@client.command(aliases=["mc"])
+@client.command(aliases=["mc", "masschanel", "masschanal", "masschanel", "masschanelunsafe"])
 async def masschannel(ctx, numberofchannels="5", *, channelname="gg-niglet"):
     if int(numberofchannels) <= 7:
         
@@ -164,7 +178,7 @@ async def masschannel(ctx, numberofchannels="5", *, channelname="gg-niglet"):
 
 # THE MASS CHANNEL COMMAND - SAFE
 # --------------------------
-@client.command(aliases=["mcs", "mc-s", "mc_s"])
+@client.command(aliases=["mcs", "mc-s", "mc_s", "safemasschannel"])
 async def masschannelsafe(ctx, numberofchannels="5", *, channelname="gg-niglet"):
     if int(numberofchannels) <= 45:
         
@@ -193,7 +207,7 @@ async def masschannelsafe(ctx, numberofchannels="5", *, channelname="gg-niglet")
 
 # THE MASS ROLE COMMAND - UNSAFE
 # --------------------------
-@client.command(aliases=["mr"])
+@client.command(aliases=["mr", "mrunsfae", "massroleunsafe"])
 async def massrole(ctx, numberofroles="5", *, rolenamelol="Moderator"):
     if int(numberofroles) <= 150:
 
@@ -225,7 +239,7 @@ async def massrole(ctx, numberofroles="5", *, rolenamelol="Moderator"):
 
 # THE MASS ROLE COMMAND - SAFE
 # --------------------------
-@client.command(aliases=["mrs"])
+@client.command(aliases=["mrs", "mrsafe", "safemassrole"])
 async def massrolesafe(ctx, numberofroles="5", *, rolenamelol="Moderator"):
     if int(numberofroles) <= 40:
 
@@ -281,7 +295,9 @@ async def on_message(message):
 
         if message.content.lower().startswith(f"{bot_prefix}help"):
             subcmnd = str(message.content).split(" ")[1]
-            if subcmnd in 
+
+            if subcmnd in spam_unsafe_wl:
+                
 
         await client.process_commands(message)
     
