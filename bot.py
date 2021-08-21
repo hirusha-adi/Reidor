@@ -3,12 +3,14 @@
 import discord, json, asyncio, string
 import time, os, platform, datetime, random
 from discord.ext import commands
+
 from keep_alive import keep_alive
 from intstallerm import INSTALL_ALL
-try:
-    INSTALL_ALL()
-except:
-    pass
+# try:
+#     INSTALL_ALL()
+# except:
+#     pass
+
 
 # MAIN VERIABLES
 # --------------------------
@@ -23,7 +25,7 @@ bot_author_icon = botconfigdata["author-icon"]
 # CREATING THE BOT
 # --------------------------
 client = commands.Bot(command_prefix = bot_prefix)
-# client.remove_command('help')
+client.remove_command('help')
 
 
 # ONLY THESE USERS ARE ABLE TO USE THE BOT COMMANDS
@@ -98,7 +100,7 @@ async def spam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I HAD A
 async def massspam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I HAD A FUCKING BONER"):
     
     # The number of messages should be below or equal 650
-    if int(numberofmsges) <= 650:
+    if int(numberofmsges) <= 350:
 
         # If it should @everyone or no
         yes_wl = ("yes", "y", "everyone", "true")
@@ -147,7 +149,7 @@ async def massspam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I H
         embed=discord.Embed(title="AN ERROR HAS OCCURED!!", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878570620999319562/pngaaa.com-3484527.png")
-        embed.add_field(name="Error:", value="Please enter a value below 650", inline=True)
+        embed.add_field(name="Error:", value="Please enter a value below 350", inline=True)
         embed.set_footer(text=f"Bot created by {bot_creator_name}")
         await ctx.send(embed=embed)
 
@@ -161,7 +163,7 @@ async def massspam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I H
 
 # THE MASS CHANNEL COMMAND - UNSAFE
 # --------------------------
-@client.command(aliases=["mc", "masschanel", "masschanal", "masschanel", "masschanelunsafe"])
+@client.command(aliases=["mc", "masschanel", "masschanal", "masschanelunsafe"])
 async def masschannel(ctx, numberofchannels="5", *, channelname="gg-niglet"):
     if int(numberofchannels) <= 7:
         
@@ -218,16 +220,15 @@ async def massrole(ctx, numberofroles="5", *, rolenamelol="Moderator"):
         # The permissions of this role is of a Moderator 
         role_perms = discord.Permissions(add_reactions=True, administrator=False, attach_files=True, ban_members=False, change_nickname=True, connect=True, create_instant_invite=True, deafen_members=False, embed_links=True, external_emojis=True, kick_members=False, manage_channels=False, manage_emojis=False, manage_guild=False, manage_messages=False, manage_nicknames=False, manage_permissions=False, manage_roles=False, manage_webhooks=False, mention_everyone=False, move_members=False, mute_members=False, priority_speaker=True, view_guild_insights=True,  view_channel=True,  view_audit_log=False, use_voice_activation=True, use_slash_commands=True, use_external_emojis=True, stream=True, speak=True, send_tts_messages=False, send_messages=True, request_to_speak=True, read_messages=True, read_message_history=True)
 
-        if rolenamelol == "random":
-            # This will give it a random name
-            newrolenamelol = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
-
-        else:
-            # Making the name valid by replacing Invalid Characters with "x" and spaces with "-"
-            newrolenamelol = str(rolenamelol).replace(" ", "-").replace("[", "x").replace("]", "x").replace(":", "x").replace("<", "x").replace(">", "x").replace("?", "x").replace("/", "x").replace("{", "x").replace("}", "x")
+        newrolenamelol = str(rolenamelol).replace(" ", "-").replace("[", "x").replace("]", "x").replace(":", "x").replace("<", "x").replace(">", "x").replace("?", "x").replace("/", "x").replace("{", "x").replace("}", "x")
         
         # Creating the coles with a number infront of it, so there won't be the same name repeatedly
         for iteration, chnls in enumerate(range(int(numberofroles))):
+
+            if rolenamelol == "random":
+                # This will give it a random name
+                newrolenamelol = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+
             print(iteration, chnls)
             try:
                 await ctx.guild.create_role(name=f"{iteration}{newrolenamelol}", permissions=role_perms)
@@ -250,16 +251,14 @@ async def massrolesafe(ctx, numberofroles="5", *, rolenamelol="Moderator"):
         # The permissions of this role is of a Moderator 
         role_perms = discord.Permissions(add_reactions=True, administrator=False, attach_files=True, ban_members=False, change_nickname=True, connect=True, create_instant_invite=True, deafen_members=False, embed_links=True, external_emojis=True, kick_members=False, manage_channels=False, manage_emojis=False, manage_guild=False, manage_messages=False, manage_nicknames=False, manage_permissions=False, manage_roles=False, manage_webhooks=False, mention_everyone=False, move_members=False, mute_members=False, priority_speaker=True, view_guild_insights=True,  view_channel=True,  view_audit_log=False, use_voice_activation=True, use_slash_commands=True, use_external_emojis=True, stream=True, speak=True, send_tts_messages=False, send_messages=True, request_to_speak=True, read_messages=True, read_message_history=True)
 
-        if rolenamelol == "random":
-            # This will give it a random name
-            newrolenamelol = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+        newrolenamelol = str(rolenamelol).replace(" ", "-").replace("[", "x").replace("]", "x").replace(":", "x").replace("<", "x").replace(">", "x").replace("?", "x").replace("/", "x").replace("{", "x").replace("}", "x")
 
-        else:
-            # Making the name valid by replacing Invalid Characters with "x" and spaces with "-"
-            newrolenamelol = str(rolenamelol).replace(" ", "-").replace("[", "x").replace("]", "x").replace(":", "x").replace("<", "x").replace(">", "x").replace("?", "x").replace("/", "x").replace("{", "x").replace("}", "x")
-        
-        # Creating the coles with a number infront of it, so there won't be the same name repeatedly
+        # Creating the roles with a number infront of it, so there won't be the same name repeatedly
         for iteration, chnls in enumerate(range(int(numberofroles))):
+            if rolenamelol == "random":
+                # This will give it a random name
+                newrolenamelol = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+
             print(iteration, chnls)
             await asyncio.sleep(1)
             try:
@@ -284,24 +283,29 @@ async def on_message(message):
     
     if message.author.id in able_users:
 
-        # if message.content.lower().startswith(f"{bot_prefix}f"):
-
-        #     # for channel in message.guild.channels:
-        #     #     print(channel, channel.id)
-        #     #     try:
-        #     #         x = client.get_channel(channel.id)
-        #     #         await x.send("FUCK SRI LANKA")
-        #     #     except AttributeError:
-        #     #         print("Its a Category or a Voice Channel, not a text channel")
-        #     #         continue
-        #     #     x = None
-        #     pass
-
         if message.content.lower().startswith(f"{bot_prefix}help"):
-            subcmnd = str(message.content).split(" ")[1]
+            try:
+                subcmnd = str(message.content).split(" ")[1]
+            except:
+                subcmnd = "spam"
 
             if subcmnd in spam_unsafe_wl:
-                
+                embed=discord.Embed(title="Help for Spam", color=0x00d9ff)
+                embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
+                embed.add_field(name="Other names:", value=f"{str(spam_unsafe_wl)}", inline=False)
+                embed.add_field(name="Usage:", value=f"`{bot_prefix}s [number_of_messages] [everyone_mention_yes_or_no] [message_to_spam] `", inline=False)
+                embed.add_field(name="Description", value="This will only spam messages in the given channel, maximum number_of_messages possible is 650, default is 5", inline=False)
+                embed.set_footer(text=f"Bot created by {bot_creator_name}")
+                await message.channel.send(embed=embed)
+            
+            if subcmnd in mass_spam_wl:
+                embed=discord.Embed(title="Help for Mass Spam", color=0x00d9ff)
+                embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
+                embed.add_field(name="Other names:", value=f"{str(mass_spam_wl)}", inline=False)
+                embed.add_field(name="Usage:", value=f"`{bot_prefix}ms [number_of_messages] [everyone_mention_yes_or_no] [message_to_spam] `", inline=False)
+                embed.add_field(name="Description", value="This will spam in every channel of every server the bot has been joined to, maximum number_of_messages possible is 350, default is 5", inline=False)
+                embed.set_footer(text=f"Bot created by {bot_creator_name}")
+                await message.channel.send(embed=embed)
 
 
         await client.process_commands(message)
