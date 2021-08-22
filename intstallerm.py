@@ -45,10 +45,8 @@ def INSTALL_ALL():
     Install all the modules needed to start YourBot
     """
     module_nl = (
-        "discord", 
-        "requests",
-        "bs4",
-        "beautifulsoup4",
+        "discord",
+        "flask"
     )
     for module in module_nl:
         pip_install(module)
