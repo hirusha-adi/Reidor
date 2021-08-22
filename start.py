@@ -1,19 +1,16 @@
 import os, time
-
-from discord import client
 import bot
-import selfbot
-    
-    
+
 def ENTIRE_PROGRAM():
+    os.system("cls")
     print(""" 
     ██████████████████████████████████
     █▄─▄▄▀█▄─▄▄─█▄─▄█▄─▄▄▀█─▄▄─█▄─▄▄▀█
     ██─▄─▄██─▄█▀██─███─██─█─██─██─▄─▄█
     ▀▄▄▀▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▀▀▄▄▄▄▀▄▄▀▄▄▀
+            Discord Bot v1.0
 
             [1] Start Bot
-            [2] Start Self Bot
             [99] Exit
     """)
     mainchoice = input("+ Please select an option: ")
@@ -25,10 +22,28 @@ def ENTIRE_PROGRAM():
     
     elif mainchoice == "2":
         os.system("cls")
-        selfbot.keep_alive()
-        selfbot.client.run(selfbot.token)
+        print("""
 
+        █████████████████████████████████████████
+        █─▄▄▄─█▄─▄▄▀█▄─▄▄─█▄─▄▄▀█▄─▄█─▄─▄─█─▄▄▄▄█
+        █─███▀██─▄─▄██─▄█▀██─██─██─████─███▄▄▄▄─█
+        ▀▄▄▄▄▄▀▄▄▀▄▄▀▄▄▄▄▄▀▄▄▄▄▀▀▄▄▄▀▀▄▄▄▀▀▄▄▄▄▄▀
+
+                    Requested by Key
+             Made by @hirusha-adi (github)
+       link: https://github.com/hirusha-adi/Reidor
+                
+                    [1] Main Menu
+                    [99] Exit
+
+        """)
+        subinp = input("+ Please select an option: ")
+        if subinp == "99":
+            exit()
+        else:
+            ENTIRE_PROGRAM()
     
+
     else:
         os.system("cls")
         print("- COMMAND YOU ENTERED IS NOT RECOGNIZED")

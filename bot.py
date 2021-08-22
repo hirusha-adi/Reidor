@@ -260,7 +260,7 @@ async def masschannel(ctx, numberofchannels="5", *, channelname="gg-niglet"):
         embed=discord.Embed(title="AN ERROR HAS OCCURED!!", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878594081951981568/Channel_A_Logo_transparent.png")
-        embed.add_field(name="Error:", value="Please enter a value below 45", inline=True)
+        embed.add_field(name="Error:", value="Please enter a value below 100", inline=True)
         embed.set_footer(text=f"Bot created by {bot_creator_name}")
         try:
             if stealth_mode == "off":
@@ -307,7 +307,7 @@ async def masschannelsafe(ctx, numberofchannels="5", *, channelname="gg-niglet")
         embed=discord.Embed(title="AN ERROR HAS OCCURED!!", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878594081951981568/Channel_A_Logo_transparent.png")
-        embed.add_field(name="Error:", value="Please enter a value below 60", inline=True)
+        embed.add_field(name="Error:", value="Please enter a value below 45", inline=True)
         embed.set_footer(text=f"Bot created by {bot_creator_name}")
         try:
             if stealth_mode == "off":
@@ -369,7 +369,7 @@ async def massrole(ctx, numberofroles="5", *, rolenamelol="Moderator"):
         print("- Please enter a value below 150 as the first argument (number of roles to create)")
         embed=discord.Embed(title="AN ERROR HAS OCCURED!!", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
-        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878594081951981568/Channel_A_Logo_transparent.png")
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878971324242993182/7-77391_businessman-transparent-business-man-png.png")
         embed.add_field(name="Error:", value="Please enter a value below 150", inline=True)
         embed.set_footer(text=f"Bot created by {bot_creator_name}")
         try:
@@ -422,8 +422,8 @@ async def massrolesafe(ctx, numberofroles="5", *, rolenamelol="Moderator"):
         print("- Please enter a value below 45 as the first argument (number of roles to create)")
         embed=discord.Embed(title="AN ERROR HAS OCCURED!!", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
-        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878594081951981568/Channel_A_Logo_transparent.png")
-        embed.add_field(name="Error:", value="Please enter a value below 40", inline=True)
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878971324242993182/7-77391_businessman-transparent-business-man-png.png")
+        embed.add_field(name="Error:", value="Please enter a value below 45", inline=True)
         embed.set_footer(text=f"Bot created by {bot_creator_name}")
         try:
             if stealth_mode == "off":
@@ -478,7 +478,7 @@ async def massban(ctx, *, banreason="You got pwned"):
 
 # THE MASS BAN COMMAND - SAFE
 # --------------------------
-@client.command(aliases=["mbs", "banmasssafw", "mbsafe", "safemb", "safemassban"])
+@client.command(aliases=["mbs", "banmasssafe", "mbsafe", "safemb", "safemassban"])
 async def massbansafe(ctx, *, banreason="You got pwned"):
     if stealth_mode == "off":
         loading_sent = await ctx.send(embed=loading_msg)
@@ -531,7 +531,7 @@ async def help(ctx, *, subcmnd="all"):
     massrole_safe_wl = ("massrolesafe", "mrs", "mrsafe", "safemassrole")
 
     massban_unsafe_wl = ("massban", "mb", "banmass", "mbu", "massbanunsafe", "unsafemassban")
-    massban_safe_wl = ("massbansafe", "mbs", "banmasssafw", "mbsafe", "safemb", "safemassban")
+    massban_safe_wl = ("massbansafe", "mbs", "banmasssafe", "mbsafe", "safemb", "safemassban")
 
     if subcmnd in spam_unsafe_wl:
         embed=discord.Embed(title="Help for Spam", color=0x00d9ff)
