@@ -15,7 +15,7 @@ from intstallerm import INSTALL_ALL
 
 # MAIN STUFF
 # --------------------------
-botconfigdata = json.load(open("bot.json", "r"))
+botconfigdata = json.load(open("selfbot.json", "r"))
 bot_prefix = botconfigdata["bot-prefix"]
 bot_creator_name = botconfigdata["bot-creator-name"]
 bot_name = botconfigdata["bot-name"]
@@ -23,7 +23,7 @@ bot_author_icon = botconfigdata["author-icon"]
 bot_sm_wt_jsonl = botconfigdata["safe-modes-wait-time"] # bot safe mode what time
 botsmwt = float(bot_sm_wt_jsonl)
 stealth_mode = botconfigdata["stealth-mode-on-off"]
-token = botconfigdata["bot-token"]
+token = botconfigdata["your-token"]
 
 
 # CREATING THE BOT
@@ -36,19 +36,6 @@ intents = discord.Intents().all()
 client = commands.Bot(command_prefix = bot_prefix, intents=intents)
 client.remove_command('help')
 
-
-# ONLY THESE USERS ARE ABLE TO USE THE BOT COMMANDS
-# --------------------------
-able_users = (
-    837958948995989514, # Key
-    584662127470575616, # Me
-    384159667275825152, # Shado
-    650641006248591401, # Lemons
-    709299771415986227, # Mikey
-    763756846074167326, # Busters
-    751229838525988995
-) 
-# --------------------------
 
 
 # NOW THE BOT IS READY
@@ -609,15 +596,19 @@ async def help(ctx, *, subcmnd="all"):
 
 
 
-# THE BOT WILL ONLY ACCEPT COMMANDS FROM able_users
+# THE BOT WILL ONLY ACCEPT COMMANDS FROM the self bot hoster
 # --------------------------
 @client.event
 async def on_message(message):
-    if client.user == message.author:
-        return
+    # if client.user == message.author:
+    #     return
     
-    if message.author.id in able_users:
+    # if message.author.id in able_users:
+    #     await client.process_commands(message)
+
+    if client.user == message.author:
         await client.process_commands(message)
+
     
 
 # keep_alive()
