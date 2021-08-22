@@ -3,6 +3,7 @@
 import discord, json, asyncio, string
 import time, os, platform, datetime, random
 from discord.ext import commands
+from discord.ext.commands import bot
 
 from keep_alive import keep_alive
 from intstallerm import INSTALL_ALL
@@ -14,8 +15,7 @@ from intstallerm import INSTALL_ALL
 
 # MAIN VERIABLES
 # --------------------------
-# token = os.environ['TOKEN']
-token = "YOUR TOKEN HERE"
+token = os.environ['TOKEN']
 botconfigdata = json.load(open("config.json", "r"))
 bot_prefix = botconfigdata["bot-prefix"]
 bot_creator_name = botconfigdata["bot-creator-name"]
@@ -347,6 +347,15 @@ async def help(ctx, *, subcmnd="all"):
         embed.add_field(name="Other names:", value=f"{str(masschannel_unsafe_wl)}", inline=False)
         embed.add_field(name="Usage:", value=f"`{bot_prefix}mr [number_of_roles_to_create] [role_name] `", inline=False)
         embed.add_field(name="Description", value="This command creates roles in the server upto the specified amount with the given name with a time interval, maximum number_of_roles_to_create is 45, default is 5. Mentioning the [role_name] as 'random' will create roles with random names", inline=False)
+        embed.set_footer(text=f"Bot created by {bot_creator_name}")
+        await ctx.send(embed=embed)
+    
+    else:
+        embed=discord.Embed(title="Help", color=0x00d9ff)
+        embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878847160177786940/img-help_button.png")
+        embed.add_field(name="Command list:", value=f"**{bot_prefix}h** - Help\n**{bot_prefix}s** - Spam\n**{bot_prefix}ms** - Mass Spam\n**{bot_prefix}mc** - Mass Channel (Unsafe/Fast)\n**{bot_prefix}mcs** - Mass Channel Safe\n**{bot_prefix}mr** - Mass Role (Unsafe/Fast)\n**{bot_prefix}mrs** - Mass Role Safe" , inline=False)
+        embed.add_field(name="More Help:", value=f"Enter `{bot_prefix}h [command_name]` to see more + described help for each and every command!")
         embed.set_footer(text=f"Bot created by {bot_creator_name}")
         await ctx.send(embed=embed)
 
