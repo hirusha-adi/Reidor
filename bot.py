@@ -370,68 +370,6 @@ async def on_message(message):
         return
     
     if message.author.id in able_users:
-
-        if message.content.lower().startswith(f"{bot_prefix}help"):
-            try:
-                subcmnd = str(message.content).split(" ")[1]
-            except:
-                subcmnd = "spam"
-
-        #     if subcmnd in spam_unsafe_wl:
-        #         embed=discord.Embed(title="Help for Spam", color=0x00d9ff)
-        #         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
-        #         embed.add_field(name="Other names:", value=f"{str(spam_unsafe_wl)}", inline=False)
-        #         embed.add_field(name="Usage:", value=f"`{bot_prefix}s [number_of_messages] [everyone_mention_yes_or_no] [message_to_spam] `", inline=False)
-        #         embed.add_field(name="Description", value="This will only spam messages in the given channel, maximum number_of_messages possible is 650, default is 5", inline=False)
-        #         embed.set_footer(text=f"Bot created by {bot_creator_name}")
-        #         await message.channel.send(embed=embed)
-            
-        #     elif subcmnd in mass_spam_wl:
-        #         embed=discord.Embed(title="Help for Mass Spam", color=0x00d9ff)
-        #         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
-        #         embed.add_field(name="Other names:", value=f"{str(mass_spam_wl)}", inline=False)
-        #         embed.add_field(name="Usage:", value=f"`{bot_prefix}ms [number_of_messages] [everyone_mention_yes_or_no] [message_to_spam] `", inline=False)
-        #         embed.add_field(name="Description", value="This will spam in every channel of every server the bot has been joined to, maximum number_of_messages possible is 350, default is 5, so its 5 messages for every channel one by one", inline=False)
-        #         embed.set_footer(text=f"Bot created by {bot_creator_name}")
-        #         await message.channel.send(embed=embed)
-            
-        #     elif subcmnd in masschannel_unsafe_wl:
-        #         embed=discord.Embed(title="Help for Mass Channel Creating - Unsafe", color=0x00d9ff)
-        #         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
-        #         embed.add_field(name="Other names:", value=f"{str(masschannel_unsafe_wl)}", inline=False)
-        #         embed.add_field(name="Usage:", value=f"`{bot_prefix}mc [number_of_channels_to_create] [channel_name] `", inline=False)
-        #         embed.add_field(name="Description", value="This command creates channels in the server upto the specified amount with the given name continuously, maximum number_of_channels_to_create is 100, default is 5", inline=False)
-        #         embed.set_footer(text=f"Bot created by {bot_creator_name}")
-        #         await message.channel.send(embed=embed)
-            
-        #     elif subcmnd in masschannel_safe_wl:
-        #         embed=discord.Embed(title="Help for Mass Channel Creating - Safe", color=0x00d9ff)
-        #         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
-        #         embed.add_field(name="Other names:", value=f"{str(masschannel_unsafe_wl)}", inline=False)
-        #         embed.add_field(name="Usage:", value=f"`{bot_prefix}mcs [number_of_channels_to_create] [channel_name] `", inline=False)
-        #         embed.add_field(name="Description", value="This command creates channels in the server upto the specified amount with the given name with a time interval, maximum number_of_channels_to_create is 45, default is 5", inline=False)
-        #         embed.set_footer(text=f"Bot created by {bot_creator_name}")
-        #         await message.channel.send(embed=embed)
-            
-        #     elif subcmnd in massrole_unsafe_wl:
-        #         embed=discord.Embed(title="Help for Mass Role Creating - Unsafe", color=0x00d9ff)
-        #         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
-        #         embed.add_field(name="Other names:", value=f"{str(masschannel_unsafe_wl)}", inline=False)
-        #         embed.add_field(name="Usage:", value=f"`{bot_prefix}mr [number_of_roles_to_create] [role_name] `", inline=False)
-        #         embed.add_field(name="Description", value="This command creates roles in the server upto the specified amount with the given name continuously, maximum number_of_roles_to_create is 150, default is 5", inline=False)
-        #         embed.set_footer(text=f"Bot created by {bot_creator_name}")
-        #         await message.channel.send(embed=embed)
-            
-        #     elif subcmnd in massrole_safe_wl:
-        #         embed=discord.Embed(title="Help for Mass Role Creating - Safe", color=0x00d9ff)
-        #         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
-        #         embed.add_field(name="Other names:", value=f"{str(masschannel_unsafe_wl)}", inline=False)
-        #         embed.add_field(name="Usage:", value=f"`{bot_prefix}mr [number_of_roles_to_create] [role_name] `", inline=False)
-        #         embed.add_field(name="Description", value="This command creates roles in the server upto the specified amount with the given name with a time interval, maximum number_of_roles_to_create is 45, default is 5. Mentioning the [role_name] as 'random' will create roles with random names", inline=False)
-        #         embed.set_footer(text=f"Bot created by {bot_creator_name}")
-        #         await message.channel.send(embed=embed)
-
-
         await client.process_commands(message)
     
 
