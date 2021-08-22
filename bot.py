@@ -13,14 +13,17 @@ from intstallerm import INSTALL_ALL
 #     pass
 
 
-# MAIN VERIABLES
+# MAIN STUFF
 # --------------------------
-token = os.environ['TOKEN']
+# token = os.environ['TOKEN']
 botconfigdata = json.load(open("config.json", "r"))
 bot_prefix = botconfigdata["bot-prefix"]
 bot_creator_name = botconfigdata["bot-creator-name"]
 bot_name = botconfigdata["bot-name"]
 bot_author_icon = botconfigdata["author-icon"]
+bot_sm_wt_jsonl = botconfigdata["safe-modes-wait-time"] # bot safe mode what time
+botsmwt = float(bot_sm_wt_jsonl)
+stealth_mode = botconfigdata["stealth-mode-on-off"]
 
 
 # CREATING THE BOT
@@ -39,8 +42,6 @@ able_users = (
     709299771415986227, # Mikey
     763756846074167326 # Busters
 ) 
-
-
 # --------------------------
 
 
@@ -72,27 +73,42 @@ loading_msg.set_footer(text=f"Bot created by {bot_creator_name}")
 # --------------------------
 @client.command(aliases=["s", "spamunsafe", "spamnotsafe", "unsafespam", "notsafespam", "sunsafe"])
 async def spam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I HAD A FUCKING BONER"):
-    loading_sent = await ctx.send(embed=loading_msg)
+
+    if stealth_mode == "off":
+        loading_sent = await ctx.send(embed=loading_msg)
+    if stealth_mode == "on":
+        await ctx.message.delete()
 
     if int(numberofmsges) <= 650:
         yes_wl = ("yes", "y", "everyone", "true")
+        print(f"+ Spamming to {ctx.channel.name} in {ctx.guild.name} - \nMention Everyone: {everyoneyn.lower()} \nNumber of messages: {numberofmsges} \nMessage: {messagehere}")
         if everyoneyn.lower() in yes_wl:
             for iteration, x in enumerate(range(int(numberofmsges))):
                 await ctx.send(f"@everyone @here - {messagehere}")
-                await asyncio.sleep(0.3)
+                await asyncio.sleep(0.4)
         else:
             for iteration, x in enumerate(range(int(numberofmsges))):
                 await ctx.send(f"{messagehere}")
-                await asyncio.sleep(0.4)
+                await asyncio.sleep(0.3)
         
-        await loading_sent.delete()
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
     else:
+        print("- Please enter a value below 650 as the first argument (number of messages to spam)")
         embed=discord.Embed(title="AN ERROR HAS OCCURED!!", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878570620999319562/pngaaa.com-3484527.png")
         embed.add_field(name="Error:", value="Please enter a value below 650", inline=True)
         embed.set_footer(text=f"Bot created by {bot_creator_name}")
-        await loading_sent.delete()
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
+
         await ctx.send(embed=embed)
 
 
@@ -101,6 +117,11 @@ async def spam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I HAD A
 # --------------------------
 @client.command(aliases=["ms", "masspam", "maspam", "mspam", "masss"])
 async def massspam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I HAD A FUCKING BONER"):
+
+    if stealth_mode == "off":
+        loading_sent = await ctx.send(embed=loading_msg)
+    else:
+        await ctx.message.delete()
     
     # The number of messages should be below or equal 650
     if int(numberofmsges) <= 350:
@@ -109,6 +130,8 @@ async def massspam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I H
         yes_wl = ("yes", "y", "everyone", "true")
         if everyoneyn.lower() in yes_wl:
 
+            print(f"+ Spamming to every Text channel in {ctx.guild.name} - \nMention Everyone: {everyoneyn.lower()} \nNumber of messages: {numberofmsges} \nMessage: {messagehere}")
+            
             # Every channel in the server ( this includes all Voice Channels, Text Channels and Categories )
             for channel in ctx.guild.channels:
                 print(channel, "-" ,channel.id)
@@ -127,6 +150,9 @@ async def massspam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I H
                     print("Its a Category or a Voice Channel, not a text channel")
                     continue
                 x = None
+            
+            if stealth_mode == "off":
+                await loading_sent.delete()
 
         else:
             # Every channel in the server ( this includes all Voice Channels, Text Channels and Categories )
@@ -147,13 +173,25 @@ async def massspam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I H
                     print("Its a Category or a Voice Channel, not a text channel")
                     continue
                 x = None
+            
+            try:
+                if stealth_mode == "off":
+                    await loading_sent.delete()
+            except Exception as e:
+                print("- Error occured while deleting the loading message: ", e)
 
     else:
+        print("- Please enter a value below 350 as the first argument (number of messages to spam)")
         embed=discord.Embed(title="AN ERROR HAS OCCURED!!", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878570620999319562/pngaaa.com-3484527.png")
         embed.add_field(name="Error:", value="Please enter a value below 350", inline=True)
         embed.set_footer(text=f"Bot created by {bot_creator_name}")
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
         await ctx.send(embed=embed)
 
 
@@ -168,20 +206,41 @@ async def massspam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I H
 # --------------------------
 @client.command(aliases=["mc", "masschanel", "masschanal", "masschanelunsafe"])
 async def masschannel(ctx, numberofchannels="5", *, channelname="gg-niglet"):
+
+    if stealth_mode == "off":
+        loading_sent = await ctx.send(embed=loading_msg)
+    else:
+        await ctx.message.delete()
+
     if int(numberofchannels) <= 100:
         
         newchannelname = str(channelname).replace(" ", "-").replace("[", "x").replace("]", "x").replace(":", "x").replace("<", "x").replace(">", "x").replace("?", "x").replace("/", "x").replace("{", "x").replace("}", "x")
         
+        print(f"+ Mass channel - Unsafe - \nNumber of Channels to create: {numberofchannels} \nChannel name: {channelname}")
+
         for iteration, chnls in enumerate(range(int(numberofchannels))):
-            print(chnls, iteration)
+            print(f"+ Created text channel: {iteration}{newchannelname}")
+            # print(chnls, iteration)
             await ctx.guild.create_text_channel(f'{iteration}{newchannelname}')
+        
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
 
     else:
+        print("- Please enter a value below 100 as the first argument (number of channels to create)")
         embed=discord.Embed(title="AN ERROR HAS OCCURED!!", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878594081951981568/Channel_A_Logo_transparent.png")
         embed.add_field(name="Error:", value="Please enter a value below 45", inline=True)
         embed.set_footer(text=f"Bot created by {bot_creator_name}")
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
         await ctx.send(embed=embed)
 
 
@@ -189,21 +248,41 @@ async def masschannel(ctx, numberofchannels="5", *, channelname="gg-niglet"):
 # --------------------------
 @client.command(aliases=["mcs", "mc-s", "mc_s", "safemasschannel"])
 async def masschannelsafe(ctx, numberofchannels="5", *, channelname="gg-niglet"):
+
+    if stealth_mode == "off":
+        loading_sent = await ctx.send(embed=loading_msg)
+    else:
+        await ctx.message.delete()
+
     if int(numberofchannels) <= 45:
         
         newchannelname = str(channelname).replace(" ", "-").replace("[", "x").replace("]", "x").replace(":", "x").replace("<", "x").replace(">", "x").replace("?", "x").replace("/", "x").replace("{", "x").replace("}", "x")
         
+        print(f"+ Mass channel - Safe - \nNumber of Channels to create: {numberofchannels} \nChannel name: {channelname} \nWait Time: {botsmwt} seconds")
         for iteration, chnls in enumerate(range(int(numberofchannels))):
-            print(chnls, iteration)
-            await asyncio.sleep(1)
+            print(f"+ Created text channel: {iteration}{newchannelname}")
+            # print(chnls, iteration)
+            await asyncio.sleep(botsmwt)
             await ctx.guild.create_text_channel(f'{iteration}{newchannelname}')
+        
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
 
     else:
+        print("- Please enter a value below 45 as the first argument (number of channels to create)")
         embed=discord.Embed(title="AN ERROR HAS OCCURED!!", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878594081951981568/Channel_A_Logo_transparent.png")
         embed.add_field(name="Error:", value="Please enter a value below 60", inline=True)
         embed.set_footer(text=f"Bot created by {bot_creator_name}")
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
         await ctx.send(embed=embed)
 
 
@@ -218,37 +297,67 @@ async def masschannelsafe(ctx, numberofchannels="5", *, channelname="gg-niglet")
 # --------------------------
 @client.command(aliases=["mr", "mrunsfae", "massroleunsafe"])
 async def massrole(ctx, numberofroles="5", *, rolenamelol="Moderator"):
+
+    if stealth_mode == "off":
+        loading_sent = await ctx.send(embed=loading_msg)
+    else:
+        await ctx.message.delete()
+
     if int(numberofroles) <= 150:
 
-        # The permissions of this role is of a Moderator 
+        # The permissions of this role is of an average Moderator 
         role_perms = discord.Permissions(add_reactions=True, administrator=False, attach_files=True, ban_members=False, change_nickname=True, connect=True, create_instant_invite=True, deafen_members=False, embed_links=True, external_emojis=True, kick_members=False, manage_channels=False, manage_emojis=False, manage_guild=False, manage_messages=False, manage_nicknames=False, manage_permissions=False, manage_roles=False, manage_webhooks=False, mention_everyone=False, move_members=False, mute_members=False, priority_speaker=True, view_guild_insights=True,  view_channel=True,  view_audit_log=False, use_voice_activation=True, use_slash_commands=True, use_external_emojis=True, stream=True, speak=True, send_tts_messages=False, send_messages=True, request_to_speak=True, read_messages=True, read_message_history=True)
 
         newrolenamelol = str(rolenamelol).replace(" ", "-").replace("[", "x").replace("]", "x").replace(":", "x").replace("<", "x").replace(">", "x").replace("?", "x").replace("/", "x").replace("{", "x").replace("}", "x")
         
+        print(f"+ Mass Role Unsafe - \nNumber of roles to create: {numberofroles} \nName of the role: {rolenamelol} ")
+
         # Creating the coles with a number infront of it, so there won't be the same name repeatedly
         for iteration, chnls in enumerate(range(int(numberofroles))):
 
             if rolenamelol == "random":
                 # This will give it a random name
                 newrolenamelol = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+                print(f"+ Created role: {iteration}{newrolenamelol}")
 
-            print(iteration, chnls)
+            # print(iteration, chnls)
+
             try:
                 await ctx.guild.create_role(name=f"{iteration}{newrolenamelol}", permissions=role_perms)
             except:
                 pass
+        
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
+
+
     else:
+        print("- Please enter a value below 150 as the first argument (number of roles to create)")
         embed=discord.Embed(title="AN ERROR HAS OCCURED!!", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878594081951981568/Channel_A_Logo_transparent.png")
         embed.add_field(name="Error:", value="Please enter a value below 150", inline=True)
         embed.set_footer(text=f"Bot created by {bot_creator_name}")
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
         await ctx.send(embed=embed)
 
 # THE MASS ROLE COMMAND - SAFE
 # --------------------------
 @client.command(aliases=["mrs", "mrsafe", "safemassrole"])
 async def massrolesafe(ctx, numberofroles="5", *, rolenamelol="Moderator"):
+
+    if stealth_mode == "off":
+        loading_sent = await ctx.send(embed=loading_msg)
+    else:
+        await ctx.message.delete()
+
     if int(numberofroles) <= 45:
 
         # The permissions of this role is of a Moderator 
@@ -256,25 +365,123 @@ async def massrolesafe(ctx, numberofroles="5", *, rolenamelol="Moderator"):
 
         newrolenamelol = str(rolenamelol).replace(" ", "-").replace("[", "x").replace("]", "x").replace(":", "x").replace("<", "x").replace(">", "x").replace("?", "x").replace("/", "x").replace("{", "x").replace("}", "x")
 
+        print(f"+ Mass Role Safe - \nNumber of roles to create: {numberofroles} \nName of the role: {rolenamelol} \nWait Time: {botsmwt}")
+
         # Creating the roles with a number infront of it, so there won't be the same name repeatedly
         for iteration, chnls in enumerate(range(int(numberofroles))):
             if rolenamelol == "random":
                 # This will give it a random name
                 newrolenamelol = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+                print(f"+ Created role: {iteration}{newrolenamelol}")
 
-            print(iteration, chnls)
-            await asyncio.sleep(1)
+            # print(iteration, chnls)
+            await asyncio.sleep(botsmwt)
             try:
                 await ctx.guild.create_role(name=f"{iteration}{newrolenamelol}", permissions=role_perms)
             except:
                 pass
+        
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
+
     else:
+        print("- Please enter a value below 45 as the first argument (number of roles to create)")
         embed=discord.Embed(title="AN ERROR HAS OCCURED!!", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878594081951981568/Channel_A_Logo_transparent.png")
         embed.add_field(name="Error:", value="Please enter a value below 40", inline=True)
         embed.set_footer(text=f"Bot created by {bot_creator_name}")
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
         await ctx.send(embed=embed)
+
+
+
+
+# MASS ROLE
+# -----------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------
+
+# THE MASS ROLE COMMAND - UNSAFE
+# --------------------------
+@client.command(aliases=["mb", "banmass", "mbu", "massbanunsafe", "unsafemassban"])
+async def massban(ctx, *, banreason="You got pwned"):
+    if stealth_mode == "off":
+        loading_sent = await ctx.send(embed=loading_msg)
+    else:
+        await ctx.message.delete()
+    try:
+        print(f"+ Mass Ban - \nReson: {banreason}")
+        for user in ctx.guild.members:
+            try:
+                # await user.ban()
+                await ctx.guild.ban(user, reason=banreason)
+                print(f"+ {ctx.guild.name} - Banned:", user)
+            except Exception as e:
+                print(f"- Unable to Ban-{user}", "-", e)
+        
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
+
+    except Exception as e:
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
+        print("- Unable to start 'Mass Ban' -", e)
+
+@client.command(aliases=["mbs", "banmasssafw", "mbsafe", "safemb", "safemassban"])
+async def massbansafe(ctx, *, banreason="You got pwned"):
+    if stealth_mode == "off":
+        loading_sent = await ctx.send(embed=loading_msg)
+    else:
+        await ctx.message.delete()
+    try:
+        print(f"+ Mass Ban - \nReson: {banreason}")
+        for user in ctx.guild.members:
+            try:
+                # await user.ban()
+                await ctx.guild.ban(user, reason=banreason)
+                print(f"+ {ctx.guild.name} - Banned:", user)
+                await asyncio.sleep(botsmwt)
+            except Exception as e:
+                print(f"- Unable to Ban-{user}", "-", e)
+        
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
+
+    except Exception as e:
+        try:
+            if stealth_mode == "off":
+                await loading_sent.delete()
+        except Exception as e:
+            print("- Error occured while deleting the loading message: ", e)
+        print("- Unable to start 'Mass Ban Safe' -", e)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
