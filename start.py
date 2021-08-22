@@ -21,25 +21,11 @@ def ENTIRE_PROGRAM():
     if mainchoice == "1":
         os.system("cls")
         bot.keep_alive()
-        print("""
-    ██████████████████████████████████
-    █▄─▄▄▀█▄─▄▄─█▄─▄█▄─▄▄▀█─▄▄─█▄─▄▄▀█
-    ██─▄─▄██─▄█▀██─███─██─█─██─██─▄─▄█
-    ▀▄▄▀▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▀▀▄▄▄▄▀▄▄▀▄▄▀
-             Discord Bot v1.0
-        """)
         bot.client.run(bot.token)
     
     elif mainchoice == "2":
         os.system("cls")
         selfbot.keep_alive()
-        print("""
-    ██████████████████████████████████
-    █▄─▄▄▀█▄─▄▄─█▄─▄█▄─▄▄▀█─▄▄─█▄─▄▄▀█
-    ██─▄─▄██─▄█▀██─███─██─█─██─██─▄─▄█
-    ▀▄▄▀▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▀▀▄▄▄▄▀▄▄▀▄▄▀
-             Self Bot v1.0
-        """)
         selfbot.client.run(selfbot.token)
 
     

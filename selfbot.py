@@ -42,6 +42,14 @@ client.remove_command('help')
 # --------------------------
 @client.event
 async def on_ready():
+    os.system("cls")
+    print("""
+    ██████████████████████████████████
+    █▄─▄▄▀█▄─▄▄─█▄─▄█▄─▄▄▀█─▄▄─█▄─▄▄▀█
+    ██─▄─▄██─▄█▀██─███─██─█─██─██─▄─▄█
+    ▀▄▄▀▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▀▀▄▄▄▄▀▄▄▀▄▄▀
+             Self Bot v1.0
+        """)
     print(f"Logged in as {client.user.name}")
     print(f"Discord.py API Version: {discord.__version__}")
     print(f"Python VersionW: {platform.python_version()}")

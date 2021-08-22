@@ -55,6 +55,14 @@ able_users = (
 # --------------------------
 @client.event
 async def on_ready():
+    os.system("cls")
+    print("""
+    ██████████████████████████████████
+    █▄─▄▄▀█▄─▄▄─█▄─▄█▄─▄▄▀█─▄▄─█▄─▄▄▀█
+    ██─▄─▄██─▄█▀██─███─██─█─██─██─▄─▄█
+    ▀▄▄▀▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▀▀▄▄▄▄▀▄▄▀▄▄▀
+             Discord Bot v1.0
+        """)
     print(f"Logged in as {client.user.name}")
     print(f"Discord.py API Version: {discord.__version__}")
     print(f"Python VersionW: {platform.python_version()}")
@@ -601,7 +609,7 @@ async def help(ctx, *, subcmnd="all"):
         embed=discord.Embed(title="Help", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/878847160177786940/img-help_button.png")
-        embed.add_field(name="Command list:", value=f"**{bot_prefix}h** - Help\n**{bot_prefix}s** - Spam\n**{bot_prefix}ms** - Mass Spam\n**{bot_prefix}mc** - Mass Channel (Unsafe/Fast)\n**{bot_prefix}mcs** - Mass Channel Safe\n**{bot_prefix}mr** - Mass Role (Unsafe/Fast)\n**{bot_prefix}mrs** - Mass Role Safe" , inline=False)
+        embed.add_field(name="Command list:", value=f"**{bot_prefix}h** - Help\n**{bot_prefix}s** - Spam\n**{bot_prefix}ms** - Mass Spam\n**{bot_prefix}mc** - Mass Channel (Unsafe/Fast)\n**{bot_prefix}mcs** - Mass Channel Safe\n**{bot_prefix}mr** - Mass Role (Unsafe/Fast)\n**{bot_prefix}mrs** - Mass Role Safe\n**{bot_prefix}mb** - Mass Ban\n**{bot_prefix}mbs** - Mass Ban Safe" , inline=False)
         embed.add_field(name="More Help:", value=f"Enter `{bot_prefix}h [command_name]` to see more + described help for each and every command!")
         embed.set_footer(text=f"Bot created by {bot_creator_name}")
         await ctx.send(embed=embed)
