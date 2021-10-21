@@ -8,8 +8,9 @@ The ultimate discord server raiding bot
 
 1. Extract the `Reidor V1.1.zip` file ( make sure to download it )
 2. Open the `bot.json` file and paste your bot token to the relevant field
-3. Save the `bot.json` file and double click on the `Redor v1.1.exe` file
-4. Type 1 and hit enter
+3. Open `users.txt` file and paste your Discord ID in a new line, save and exit
+4. Save the `bot.json` file and double click on the `Redor v1.1.exe` file
+5. Type 1 and hit enter
 
 ![image](https://user-images.githubusercontent.com/36286877/130354872-ef4a329c-3568-4b2e-beb9-9c60414598f2.png)
 
