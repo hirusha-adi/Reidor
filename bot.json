@@ -1,9 +1,20 @@
-{
-    "bot-prefix":"!",
-    "bot-creator-name":"MusalaPakaya",
-    "bot-name":"Reidor01",
-    "author-icon":"https://cdn.discordapp.com/attachments/877796755234783273/878569419788410880/funny-icon-22163.png",
-    "safe-modes-wait-time":"2.0",
-    "stealth-mode-on-off":"on",
-    "bot-token":"YourBotTokenHere"
+{   
+    "bot-token":"YourBotTokenHere",
+    
+    "REIDOR":{
+        "bot-prefix":"!",
+        "bot-creator-name":"MusalaPakaya",
+        "bot-name":"Reidor01",
+        "author-icon":"https://cdn.discordapp.com/attachments/877796755234783273/878569419788410880/funny-icon-22163.png",
+        "safe-modes-wait-time":"3.0",
+        "stealth-mode-on-off":"on",
+    },
+
+    "FAKE":{
+        "bpt-prefix":"!",
+        "bot-name":"Test Bot",
+        "bot-creator-name":"MusalaPakaya",
+        "author-icon":"https://cdn.discordapp.com/attachments/877796755234783273/878569419788410880/funny-icon-22163.png"
+    }
+    
 }

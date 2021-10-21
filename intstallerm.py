@@ -9,21 +9,15 @@ if platform.system().lower().startswith('win'):
     pip = "pip"
     pyth = "python"
 
-def pip_install(mdn):
-    """Passing the module name to this function will install it!
 
-    Args:
-        mdn (String): The module Name
-    """
+def pip_install(mdn):
     try:
         os.system(f"{pip} install {mdn}")
     except Exception as e:
         print("Error", e)
 
+
 def pip_upgrade():
-    """
-    Upgrade pip
-    """
     try:
         try:
             os.system(f"{pip} install --upgrade pip")
@@ -40,15 +34,11 @@ def pip_upgrade():
 def clear():
     os.system(f'{clr}')
 
+
 def INSTALL_ALL():
-    """
-    Install all the modules needed to start YourBot
-    """
     module_nl = (
         "discord",
         "flask"
     )
     for module in module_nl:
         pip_install(module)
-
-

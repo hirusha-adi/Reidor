@@ -1,5 +1,7 @@
-import os, time
+import os
+import time
 import bot
+
 
 def ENTIRE_PROGRAM():
     os.system("cls")
@@ -19,7 +21,7 @@ def ENTIRE_PROGRAM():
         os.system("cls")
         bot.keep_alive()
         bot.client.run(bot.token)
-    
+
     elif mainchoice == "2":
         os.system("cls")
         print("""
@@ -42,7 +44,6 @@ def ENTIRE_PROGRAM():
             exit()
         else:
             ENTIRE_PROGRAM()
-    
 
     else:
         os.system("cls")
@@ -52,5 +53,3 @@ def ENTIRE_PROGRAM():
 
 
 ENTIRE_PROGRAM()
-
-
