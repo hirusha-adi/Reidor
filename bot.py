@@ -211,6 +211,29 @@ class Logger:
             else:
                 fl.write(f"\nTRACE: {final_argsc}")
 
+    def SUCCESS(self, *args):
+        final_argsc = ""
+        for arg in args:
+            final_argsc += f" {arg}"
+
+        if self.printtxt:
+            if self.color:
+                if self.time:
+                    print(f"{c.g}SUCCESS:{c.d} {dt.now()} {c.w} -{final_argsc}")
+                else:
+                    print(f"{c.g}SUCCESS:{c.w} {final_argsc}")
+            else:
+                if self.time:
+                    print(f"SUCCESS: {dt.now()} - {final_argsc}")
+                else:
+                    print(f"SUCCESS: {final_argsc}")
+
+        with open(f"{self.filename}.log", "a", encoding="utf-8") as fl:
+            if self.time:
+                fl.write(f"\nSUCCESS: {dt.now()} - {final_argsc}")
+            else:
+                fl.write(f"\nSUCCESS: {final_argsc}")
+
     def CUS(self, *args, topic: str = "INFO", colorc: str = "red"):
         final_argsc = ""
         for arg in args:
@@ -293,6 +316,7 @@ if str(botconfigdata["LOGGING"]["printtxt"]).lower().startswith('y'):
 else:
     log_printtxt = False
 log_filename = botconfigdata["LOGGING"]["filename"]
+# --------------------------
 
 
 # CREATING THE BOT
@@ -305,6 +329,13 @@ intents = discord.Intents().all()
 client = commands.Bot(command_prefix=bot_prefix, intents=intents)
 client.remove_command('help')
 
+# Creating the log object for logging.
+# I didnt use a python3 logging module, i made something simple and im using it!
+if log_state:
+    log = Logger(printtxt=log_printtxt, time=log_time,
+                 color=log_color, file=log_file, filename=log_filename)
+# --------------------------
+
 
 # ONLY THESE USERS ARE ABLE TO USE THE BOT COMMANDS
 # --------------------------
@@ -316,6 +347,8 @@ for able_user_line in all_able_users:
         able_users.append(int(able_user_line))
     except:
         pass
+if log_state:
+    log.INFO("Loaded all users that can use Commands of Reidor")
 # --------------------------
 
 
@@ -331,11 +364,17 @@ async def on_ready():
     ▀▄▄▀▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▀▀▄▄▄▄▀▄▄▀▄▄▀
              Discord Bot v1.1
         """)
-    print(f"Logged in as {client.user.name}")
+    if log_state:
+        log.INFO(f"Logged in as {client.user.name}")
+    else:
+        print(f"Logged in as {client.user.name}")
     print(f"Discord.py API Version: {discord.__version__}")
-    print(f"Python VersionW: {platform.python_version()}")
-    print("The bot is ready to be used!")
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(client.guilds)} servers!"))
+    print(f"Python Version: {platform.python_version()}")
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"in {len(client.guilds)} servers!"))
+    if log_state:
+        log.INFO("Bot is ready to be used!")
+    else:
+        print("The bot is ready to be used!")
 
 
 loading_msg = discord.Embed(title="Processing", color=0x5600f5)
@@ -357,7 +396,9 @@ loading_msg.set_footer(text=f"Bot created by {bot_creator_name}")
 # --------------------------
 @client.command(aliases=["s", "spamunsafe", "spamnotsafe", "unsafespam", "notsafespam", "sunsafe"])
 async def spam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I HAD A FUCKING BONER"):
-
+    if log_state:
+        log.CUS(f"spam(unsafe) by {ctx.author.name} in {ctx.channel.name} of {ctx.guild.name}\n   Number of messages: {numberofmsges}\n   Everyone: {everyoneyn}\n    Message: {messagehere}",
+                colorc="pruple", topic="COMMAND")
     if stealth_mode == "off":
         loading_sent = await ctx.send(embed=loading_msg)
     if stealth_mode == "on":
@@ -365,29 +406,60 @@ async def spam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I HAD A
 
     if int(numberofmsges) <= 650:
         yes_wl = ("yes", "y", "everyone", "true")
-        print(f"+ Spamming to {ctx.channel.name} in {ctx.guild.name} - \nMention Everyone: {everyoneyn.lower()} \nNumber of messages: {numberofmsges} \nMessage: {messagehere}")
         if everyoneyn.lower() in yes_wl:
             for iteration, x in enumerate(range(int(numberofmsges))):
-                if str(messagehere.lower()) == "random":
-                    messagehere = ''.join(random.choices(
-                        string.ascii_letters + string.digits, k=40))
-                await ctx.send(f"@everyone @here - {messagehere}")
+                try:
+                    if str(messagehere.lower()) == "random":
+                        messagehere = ''.join(random.choices(
+                            string.ascii_letters + string.digits, k=40))
+                    await ctx.send(f"@everyone @here - {messagehere}")
+                    if log_state and log_printtxt:
+                        log.SUCCESS(f"Message sent to {ctx.channel.name}")
+                    else:
+                        print(f"+ Message sent to {ctx.channel.name}")
+                except Exception as e:
+                    if log_state and log_printtxt:
+                        log.ERROR(f"Unable to send message! {e}")
+                    else:
+                        print("- Unable to send message!", e)
                 await asyncio.sleep(0.4)
         else:
             for iteration, x in enumerate(range(int(numberofmsges))):
-                if str(messagehere.lower()) == "random":
-                    messagehere = ''.join(random.choices(
-                        string.ascii_letters + string.digits, k=40))
-                await ctx.send(f"{messagehere}")
-                await asyncio.sleep(0.3)
+                try:
+                    if str(messagehere.lower()) == "random":
+                        messagehere = ''.join(random.choices(
+                            string.ascii_letters + string.digits, k=40))
+                    await ctx.send(f"{messagehere}")
+                    if log_state and log_printtxt:
+                        log.SUCCESS(f"Message sent to {ctx.channel.name}")
+                    else:
+                        print(f"+ Message sent to {ctx.channel.name}")
+                except Exception as e:
+                    if log_state and log_printtxt:
+                        log.ERROR(f"Unable to send message! {e}")
+                    else:
+                        print("- Unable to send message!", e)
+                await asyncio.sleep(0.4)
 
         try:
             if stealth_mode == "off":
                 await loading_sent.delete()
+            if log_state and log_printtxt:
+                log.SUCCESS(f"Deleted loading message")
+            else:
+                print("+ Deleted loading message")
         except Exception as e:
-            print("- Error occured while deleting the loading message: ", e)
+            if log_state and log_printtxt:
+                log.ERROR(f"Unable to delete the loading message! {e}")
+            else:
+                print("- Error occured while deleting the loading message: ", e)
     else:
-        print("- Please enter a value below 650 as the first argument (number of messages to spam)")
+        if log_state and log_printtxt:
+            log.ERROR(
+                f"Please enter a value below 650 as the first argument (number of messages to spam)")
+        else:
+            print(
+                "- Please enter a value below 650 as the first argument (number of messages to spam)")
         embed = discord.Embed(title="AN ERROR HAS OCCURED!!", color=0x00d9ff)
         embed.set_author(name=f"{bot_name}", icon_url=f"{bot_author_icon}")
         embed.set_thumbnail(
@@ -398,10 +470,21 @@ async def spam(ctx, numberofmsges="5", everyoneyn="yes", *, messagehere="I HAD A
         try:
             if stealth_mode == "off":
                 await loading_sent.delete()
+            if log_state and log_printtxt:
+                log.SUCCESS(f"Deleted loading message")
+            else:
+                print(f"+ Deleted loading message")
         except Exception as e:
-            print("- Error occured while deleting the loading message: ", e)
+            if log_state and log_printtxt:
+                log.ERROR(f"Unable to delete the loading message! {e}")
+            else:
+                print("- Unable to delete the loading message!", e)
 
         await ctx.send(embed=embed)
+        if log_state and log_printtxt:
+            log.INFO("Sent error message")
+        else:
+            print("+ Sent error message")
 
 
 # THE MASS SPAM COMMAND
