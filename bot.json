@@ -16,6 +16,15 @@
         "bot-creator-name":"MusalaPakaya",
         "author-icon":"https://cdn.discordapp.com/attachments/877796755234783273/878569419788410880/funny-icon-22163.png",
         "bot-notice-message":"This bot is still in the early stages of development. No commands will be added to the bot unless it passes all stabily and quality checks! Please stay tuned! Expect a lot. Thank You!"
+    },
+
+    "LOGGING":{
+        "state":"yes",
+        "color":"yes",
+        "file":"yes",
+        "filename":"log",
+        "time":"yes",
+        "printtxt":"yes"
     }
     
 }
